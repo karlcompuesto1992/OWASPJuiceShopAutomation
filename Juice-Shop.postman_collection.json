@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "e72a5589-a277-41b1-8105-776429c7d56b",
+		"name": "Juice Shop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8144029"
+	},
+	"item": [
+		{
+			"name": "Login/Authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"authenticate user\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    var token =  jsonData.authentication.token;\r",
+							"    pm.collectionVariables.set(\"access_token\", token);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"kibohylaw@getairmail.com\",\r\n    \"password\": \"Qwerty123$\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://juice-shop.guardrails.ai/rest/user/login",
+					"protocol": "https",
+					"host": [
+						"juice-shop",
+						"guardrails",
+						"ai"
+					],
+					"path": [
+						"rest",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Item to Basket",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ProductId\": 25,\r\n    \"BasketId\": \"8\",\r\n    \"quantity\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://juice-shop.guardrails.ai/api/BasketItems/",
+					"protocol": "https",
+					"host": [
+						"juice-shop",
+						"guardrails",
+						"ai"
+					],
+					"path": [
+						"api",
+						"BasketItems",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Orders from Basket",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://juice-shop.guardrails.ai/rest/basket/8",
+					"protocol": "https",
+					"host": [
+						"juice-shop",
+						"guardrails",
+						"ai"
+					],
+					"path": [
+						"rest",
+						"basket",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Item from Basket",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://juice-shop.guardrails.ai/api/BasketItems/202",
+					"protocol": "https",
+					"host": [
+						"juice-shop",
+						"guardrails",
+						"ai"
+					],
+					"path": [
+						"api",
+						"BasketItems",
+						"202"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdGF0dXMiOiJzdWNjZXNzIiwiZGF0YSI6eyJpZCI6MjMsInVzZXJuYW1lIjoiIiwiZW1haWwiOiJraWJvaHlsYXdAZ2V0YWlybWFpbC5jb20iLCJwYXNzd29yZCI6ImY3MmE2MDE2ZTAwYjY2MjhiNWYyYmYwNWJmN2I0ZTg3Iiwicm9sZSI6ImN1c3RvbWVyIiwiZGVsdXhlVG9rZW4iOiIiLCJsYXN0TG9naW5JcCI6InVuZGVmaW5lZCIsInByb2ZpbGVJbWFnZSI6Ii9hc3NldHMvcHVibGljL2ltYWdlcy91cGxvYWRzL2RlZmF1bHQuc3ZnIiwidG90cFNlY3JldCI6IiIsImlzQWN0aXZlIjp0cnVlLCJjcmVhdGVkQXQiOiIyMDIyLTA4LTIzIDA1OjQwOjIxLjY4MSArMDA6MDAiLCJ1cGRhdGVkQXQiOiIyMDIyLTA4LTIzIDA3OjI3OjE5LjQ4OCArMDA6MDAiLCJkZWxldGVkQXQiOm51bGx9LCJpYXQiOjE2NjEzMjc0MzMsImV4cCI6MTY2MTM0NTQzM30.OCSWvkm-wGLUx05yG9kfaWvo7XvlDzuqqg3hxSstlSk6Kshd58UXhp3H3Y-wEGjHKw0qgpPOA6KfVObRqD6XQQm3Pnx-9-I2LRjFwGC2pPH_c2vm_PQYbs6gsCOVEnwKea3JV28j9srqyrMgPiUYuWOKMvMf8voch5cVCE13cjE",
+			"type": "string"
+		}
+	]
+}
